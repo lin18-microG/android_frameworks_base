@@ -321,6 +321,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
         }
     };
 
+    private SparseBooleanArray mFingerprintSettingEnabledForUser = new SparseBooleanArray();
     private SparseBooleanArray mFaceSettingEnabledForUser = new SparseBooleanArray();
     private BiometricManager mBiometricManager;
     private IBiometricEnabledOnKeyguardCallback mBiometricEnabledCallback =
@@ -328,7 +329,10 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                 @Override
                 public void onChanged(BiometricSourceType type, boolean enabled, int userId)
                         throws RemoteException {
-                    if (type == BiometricSourceType.FACE) {
+                    if (type == BiometricSourceType.FINGERPRINT) {
+                        mFingerprintSettingEnabledForUser.put(userId, enabled);
+                        updateFingerprintListeningState();
+                    } else if (type == BiometricSourceType.FACE) {
                         mFaceSettingEnabledForUser.put(userId, enabled);
                         updateFaceListeningState();
                     }
@@ -1963,7 +1967,8 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                 shouldListenForFingerprintAssistant() || (mKeyguardOccluded && mIsDreaming))
                 && !mSwitchingUser && !isFingerprintDisabled(getCurrentUser())
                 && (!mKeyguardGoingAway || !mDeviceInteractive) && mIsPrimaryUser
-                && allowedOnBouncer;
+                && allowedOnBouncer
+                && mFingerprintSettingEnabledForUser.get(getCurrentUser());
         }
     }
 
@@ -2122,7 +2127,8 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
 
     private boolean isUnlockWithFingerprintPossible(int userId) {
         return mFpm != null && mFpm.isHardwareDetected() && !isFingerprintDisabled(userId)
-                && mFpm.hasEnrolledTemplates(userId);
+                && mFpm.hasEnrolledTemplates(userId)
+                && mFingerprintSettingEnabledForUser.get(userId);
     }
 
     private boolean isUnlockWithFacePossible(int userId) {
