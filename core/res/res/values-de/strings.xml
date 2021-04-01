@@ -329,6 +329,8 @@
     <string name="capability_desc_canCaptureFingerprintGestures" msgid="6861869337457461274">"Erfasst Touch-Gesten auf dem Fingerabdrucksensor des Geräts."</string>
     <string name="capability_title_canTakeScreenshot" msgid="3895812893130071930">"Screenshot erstellen"</string>
     <string name="capability_desc_canTakeScreenshot" msgid="7762297374317934052">"Es kann ein Screenshot des Displays erstellt werden."</string>
+    <string name="permlab_fakePackageSignature">Signaturtäuschung</string>
+    <string name="permdesc_fakePackageSignature">Ermöglicht der App, eine andere App vorzutäuschen. Bösartige Anwendungen könnten dies nutzen, um auf geschützte private Daten zuzugreifen. Ein legitimer Anwendungsfall ist u.a. ein Emulator zu Simulationszwecken. Diese Berechtigung ist gefährlich!</string>
     <string name="permlab_statusBar" msgid="8798267849526214017">"Statusleiste deaktivieren oder ändern"</string>
     <string name="permdesc_statusBar" msgid="5809162768651019642">"Ermöglicht der App, die Statusleiste zu deaktivieren oder Systemsymbole hinzuzufügen oder zu entfernen"</string>
     <string name="permlab_statusBarService" msgid="2523421018081437981">"Statusleiste darstellen"</string>
