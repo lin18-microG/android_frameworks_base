@@ -82,4 +82,7 @@ interface INetworkPolicyManager {
     void factoryReset(String subscriber);
 
     boolean isUidNetworkingBlocked(int uid, boolean meteredNetwork);
+
+    byte[] getBackupPayload();
+    void applyRestore(in byte[] payload);
 }
