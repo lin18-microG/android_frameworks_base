@@ -694,6 +694,10 @@ public final class DefaultPermissionGrantPolicy {
         //grantPermissionsToPackage(pm, browserPackage, userId, false [> ignoreSystemPackage <],
                 //true [>whitelistRestrictedPermissions<], FOREGROUND_LOCATION_PERMISSIONS);
 
+        // AuroraServices
+        grantPermissionsToSystemPackage(pm, "com.aurora.services", userId, STORAGE_PERMISSIONS);
+
+
         // Voice interaction
         if (voiceInteractPackageNames != null) {
             for (String voiceInteractPackageName : voiceInteractPackageNames) {
