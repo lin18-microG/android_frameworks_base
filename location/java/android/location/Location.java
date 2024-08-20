@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.SystemClock;
+import android.os.SystemProperties;
 import android.util.Printer;
 import android.util.TimeUtils;
 
@@ -553,7 +554,16 @@ public class Location implements Parcelable {
      * @return time of fix, in milliseconds since January 1, 1970.
      */
     public long getTime() {
-        return mTime;
+        long gpsTime = mTime;
+        final String gpsRollOverFix = SystemProperties.get("ro.lineage.gpsrollover");
+        // Implement this hack based on a property only
+        if (gpsRollOverFix != "") {
+            // Adding 1024 weeks for chips with GPS Week Number Rollover issue
+            // 1024 * 7 * 24 * 60 * 60 * 1000 = 619315200000L
+            if ((gpsTime > 0) && (gpsTime < 1580000000000L))
+                gpsTime += 619315200000L;
+        }
+        return gpsTime;
     }
 
     /**
