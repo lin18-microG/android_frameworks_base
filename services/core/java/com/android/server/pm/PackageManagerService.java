@@ -4512,6 +4512,14 @@ public class PackageManagerService extends IPackageManager.Stub
                 String sig = p.getMetaData().getString("fake-signature");
                 if (sig != null) {
                     pi.signatures = new Signature[] {new Signature(sig)};
+                    pi.signingInfo = new SigningInfo(
+                        new SigningDetails(
+                                pi.signatures,
+                                SigningDetails.SignatureSchemeVersion.SIGNING_BLOCK_V3,
+                                null,
+                                null
+                        )
+                    );
                 }
             }
         } catch (Throwable t) {
